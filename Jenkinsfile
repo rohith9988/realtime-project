@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_REPO = "rohithc1/titan-app"
+        DOCKER_HUB_REPO = "rohithc1/titan-app-V1"
         IMAGE_TAG = "latest"
     }
 
