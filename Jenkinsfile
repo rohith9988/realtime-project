@@ -7,19 +7,9 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Code') {
-            steps {
-                git branch: 'main',
-                    url: 'https://github.com/rohith9988/realtime-project.git'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
-                script {
-                    // Use environment variables
-                    docker.build("${env.DOCKER_HUB_REPO}:${env.IMAGE_TAG}")
-                }
+                sh "docker build -t ${DOCKER_HUB_REPO}:${IMAGE_TAG} ."
             }
         }
 
@@ -27,7 +17,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
-                        docker.image("${env.DOCKER_HUB_REPO}:${env.IMAGE_TAG}").push()
+                        docker.image("${DOCKER_HUB_REPO}:${IMAGE_TAG}").push()
                     }
                 }
             }
