@@ -7,9 +7,19 @@ pipeline {
     }
 
     stages {
+
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/rohith9988/realtime-project.git'
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
-                sh "docker build -t ${DOCKER_HUB_REPO}:${IMAGE_TAG} ."
+                sh """
+                    docker build -t ${DOCKER_HUB_REPO}:${IMAGE_TAG} .
+                """
             }
         }
 
@@ -21,6 +31,15 @@ pipeline {
                     }
                 }
             }
+        }
+    }
+
+    post {
+        success {
+            echo "Docker image pushed successfully to DockerHub: ${DOCKER_HUB_REPO}:${IMAGE_TAG}"
+        }
+        failure {
+            echo "Pipeline failed!"
         }
     }
 }
