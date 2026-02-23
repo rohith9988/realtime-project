@@ -1,2 +1,3 @@
 # realtime-project
-this project for realtime use case
+Welcome to My Static Website 
+Deployed using DevOps Pipeline
